@@ -5,9 +5,6 @@ import loadGoogleMaps from './modules/loadGoogleMaps';
 // eslint-disable-next-line no-unused-vars
 import { elements, elementStrings } from './views/base';
 import { map } from './views/mapsView';
-
-// eslint-disable-next-line no-unused-vars
-// import { clearMarkers, marker, setMarkers, setMarker } from './views/markerView';
 import * as markerView from './views/markerView';
 // eslint-disable-next-line no-unused-vars
 import { infoWindow, infoWindowContent, newInfoWindowContent } from './views/infoWindowView';
@@ -27,9 +24,6 @@ import * as reviewView from './views/reviewView';
 import * as filterView from './views/filterView';
 // eslint-disable-next-line no-unused-vars
 import { renderRestaurantRatingStars } from './views/RatingsView';
-// eslint-disable-next-line no-unused-vars,import/named,import/no-duplicates
-import { renderNewRestaurant } from './views/restaurantView';
-// eslint-disable-next-line no-unused-vars
 
 /**
  * Global state of the app
