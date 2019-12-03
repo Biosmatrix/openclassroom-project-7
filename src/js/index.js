@@ -393,9 +393,6 @@ const findRestaurants = () => {
 // Handle the results (up to 20) of the Nearby Search
 const getNearbyRestaurantsCallback = (results, status) => {
   if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-    // store the result
-    state.results = [...results, ...state.demoRestaurants];
-
     // Prepare UI for results
     restaurantView.clearResults();
     // set the markers array to an empty array
@@ -405,8 +402,12 @@ const getNearbyRestaurantsCallback = (results, status) => {
 
     // eslint-disable-next-line no-use-before-define
     // Set markers and render markers on the Map
-    state.markers = markerView.setMarkers(state.map, state.results);
+    state.markers = markerView.setMarkers(state.map, results);
     state.demoRestaurantsMarkers = markerView.setMarkers(state.map, state.demoRestaurants);
+
+    // store the result
+    state.results = [...results, ...state.demoRestaurants];
+
     // Render results on UI
     restaurantView.renderResults(state.results);
 
@@ -419,9 +420,6 @@ const getNearbyRestaurantsCallback = (results, status) => {
 
 const findRestaurantsCallback = (results, status) => {
   if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-    // store the result
-    state.results = results;
-
     // Prepare UI for results
     restaurantView.clearResults();
     // set the markers array to an empty array
@@ -432,6 +430,10 @@ const findRestaurantsCallback = (results, status) => {
     // eslint-disable-next-line no-use-before-define
     // Set markers and render markers on the Map
     state.markers = markerView.setMarkers(state.map, state.results);
+
+    // store the result
+    state.results = results;
+
     // Render results on UI
     restaurantView.renderResults(state.results);
 
