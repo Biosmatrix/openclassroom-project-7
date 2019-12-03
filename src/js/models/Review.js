@@ -1,53 +1,48 @@
 import uniqid from 'uniqid';
 
 export default class Review {
+  constructor() {
+    this.reviews = [];
+  }
 
-    constructor() {
-        this.reviews = [];
-    }
+  addReview(authorName, rating, text) {
+    const review = {
+      id: uniqid(),
+      authorName,
+      rating,
+      text,
+    };
 
-    addReview(author_name, rating, text) {
+    this.reviews.push(review);
 
-        const review = {
-            id: uniqid(),
-            author_name,
-            rating,
-            text };
+    return review;
+  }
 
-        this.reviews.push(review);
+  deleteReview(id) {
+    const index = this.reviews.findIndex(el => el.id === id);
 
-        // Persist data in localStorage
-        this.persistData();
+    this.reviews.splice(index, 1);
 
-        return review;
-    }
+    // Persist data in localStorage
+    this.storeReview();
+  }
 
-    deleteReview(id) {
+  isReviewed(id) {
+    return this.reviews.findIndex(el => el.id === id) !== -1;
+  }
 
-        const index = this.reviews.findIndex(el => el.id === id);
+  getNumReviews() {
+    return this.reviews.length;
+  }
 
-        this.reviews.splice(index, 1);
+  storeReview() {
+    localStorage.setItem('reviews', JSON.stringify(this.reviews));
+  }
 
-        // Persist data in localStorage
-        this.storeReview();
-    }
+  getReviews() {
+    const storage = JSON.parse(localStorage.getItem('reviews'));
 
-    isReviewed(id) {
-        return this.reviews.findIndex(el => el.id === id) !== -1;
-    }
-
-    getNumReviews() {
-        return this.reviews.length;
-    }
-
-    storeReview() {
-        localStorage.setItem('reviews', JSON.stringify(this.reviews));
-    }
-
-    getReviews() {
-        const storage = JSON.parse(localStorage.getItem('reviews'));
-        
-        // Restoring reviews from the localStorage
-        if (storage) this.reviews = storage;
-    }
+    // Restoring reviews from the localStorage
+    if (storage) this.reviews = storage;
+  }
 }

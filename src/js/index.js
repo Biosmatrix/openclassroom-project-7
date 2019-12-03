@@ -728,3 +728,37 @@ elements.filterInput.addEventListener('click', (event) => {
     }
   }
 });
+
+
+/**
+ * REVIEW CONTROLLER
+ */
+const controlReview = () => {
+  // 1) Get query from view
+  const inputs = reviewView.getReviewInputs();
+
+  if (inputs) {
+    // 2) New search object and add to state
+    state.review = new Review();
+
+    // 3) Prepare UI for results
+    reviewView.clearReviewInputs();
+
+    try {
+      // 4) Search for recipes
+      const review = state.review.addReview(inputs.author, inputs.rating, inputs.comment);
+
+      // 5) Render results on UI
+      reviewView.renderReview(review);
+    } catch (err) {
+      // eslint-disable-next-line no-alert
+      alert('Something wrong with review controller...');
+    }
+  }
+};
+
+elements.reviewForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  controlReview();
+});
