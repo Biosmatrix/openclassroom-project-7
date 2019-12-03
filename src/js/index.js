@@ -412,6 +412,8 @@ const getNearbyRestaurantsCallback = (results, status) => {
 
     // eslint-disable-next-line no-use-before-define
     mapEventListeners();
+
+    renderRestaurantRatingStars(elements.reviewRatingStar);
   }
 };
 
@@ -435,6 +437,8 @@ const findRestaurantsCallback = (results, status) => {
 
     // eslint-disable-next-line no-use-before-define
     mapEventListeners();
+
+    renderRestaurantRatingStars(elements.reviewRatingStar);
   }
 };
 
