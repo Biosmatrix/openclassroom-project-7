@@ -21,8 +21,6 @@ import * as restaurantView from './views/restaurantView';
 // eslint-disable-next-line no-unused-vars
 import * as reviewView from './views/reviewView';
 // eslint-disable-next-line no-unused-vars
-import * as filterView from './views/filterView';
-// eslint-disable-next-line no-unused-vars
 import { renderRestaurantRatingStars } from './views/RatingsView';
 
 /**
