@@ -50,7 +50,7 @@ export default class Restaurants {
 
     }
 
-  async restaurantData () {
+    async restaurantData () {
     try {
       const response = await fetch("./data.json");
 

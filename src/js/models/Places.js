@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { key, proxy } from '../config';
+import { key, proxy, signature } from '../config';
 
 export default class Place {
     constructor(query) {
-        this.query = query;
+        this.query = query || null;
     }
 
     async getDetails() {

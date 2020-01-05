@@ -21,7 +21,7 @@ import * as restaurantView from './views/restaurantView';
 // eslint-disable-next-line no-unused-vars
 import * as reviewView from './views/reviewView';
 // eslint-disable-next-line no-unused-vars
-import { renderRestaurantRatingStars } from './views/RatingsView';
+import { renderRestaurantRatingStars } from './views/ratingsView';
 
 /**
  * Global state of the app
@@ -668,6 +668,10 @@ for (const option of document.querySelectorAll('.custom--option')) {
     if (!this.classList.contains('selected')) {
       this.parentNode.querySelector('.custom--option.selected').classList.remove('selected');
       this.classList.add('selected');
+      if (this.textContent === 'Any Rating') {
+        this.closest('.custom--select').querySelector('.custom--select__trigger span').innerHTML = `${this.textContent}`;
+        return;
+      }
       this.closest('.custom--select').querySelector('.custom--select__trigger span').innerHTML = `${this.textContent} <span class="fa fa-star"></span>`;
     }
   });
