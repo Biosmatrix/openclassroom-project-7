@@ -43,7 +43,6 @@ body {
   grid-template-areas: "head head" "map panel";
 }
 
-
 /*
 HEADER SECTION
 */
@@ -270,8 +269,9 @@ RESULT SECTION
   }
 }
 
-#panorama,
-#streetViewWindow,
+/*
+MODAL SECTION
+*/
 #streetViewPhoto {
   max-height: 30rem;
   width: 100%;
@@ -279,7 +279,7 @@ RESULT SECTION
 }
 
 #streetViewPhoto img {
-  margin-top: 5rem;
+  //margin-top: 5rem;
   width: 100%;
   height: 30rem;
 }
@@ -301,15 +301,21 @@ RESULT SECTION
   }
 }
 
-.star-rating{
+/*
+RATING SECTION
+*/
+.star__rating{
   line-height: 3.2rem;
   font-size: 1.25rem;
 
-  .fa-star {
+   & .fa-star {
     color: orange;
   }
 }
 
+/*
+FILTER SECTION
+*/
 .custom--select__wrapper {
   position: relative;
   user-select: none;
@@ -387,33 +393,30 @@ RESULT SECTION
 
 }
 
+/*
+REVIEW SECTION
+*/
+.review {
+  &__title {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
 
+  &__name {
+    text-align: center;
+  }
 
+  &__details {
+    padding: 10px;
+  }
 
+  &__description {
+    text-align: justify;
+  }
 
-
-
-.open {
-  width: 250px;
-}
-/* Styling for place details */
-.hero {
-  width: 100%;
-  height: auto;
-  max-height: 166px;
-  display: block;
-}
-
-.place,
-p {
-  font-family: 'open sans', arial, sans-serif;
-  padding-left: 18px;
-  padding-right: 18px;
-}
-.details {
-  color: darkslategrey;
-}
-a {
-  text-decoration: none;
-  color: cadetblue;
+  &__form {
+    width: 100%;
+  }
 }
