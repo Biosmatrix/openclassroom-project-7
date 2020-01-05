@@ -25,6 +25,7 @@ export const elements = {
   filterButton: document.querySelectorAll('.filter fa'),
   filterInput: document.querySelector('.custom--options'),
 };
+
 export const elementStrings = {
   restaurantRatingStar: 'restaurant_rating .fa',
   restaurantForm: 'restaurantForm',
@@ -43,7 +44,6 @@ export const render = (template, selector) => {
 
   node.innerHTML = template;
 };
-
 
 // Create an element with an optional CSS class
 export const createElement = (tag, className) => {
