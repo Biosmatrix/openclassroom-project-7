@@ -3,8 +3,8 @@ import { elements } from './base';
 import { renderReviews } from './reviewView';
 import icons from '../../img/icons.svg';
 import logo from '../../img/logo.png';
-// eslint-disable-next-line import/no-named-as-default,import/no-named-as-default-member
-import { renderStreetViewPhoto }  from './StreetView';
+// eslint-disable-next-line import/no-cycle
+import { renderStreetViewPhoto } from './streetView';
 
 export const clearResults = () => {
   elements.searchResultList.innerHTML = '';
@@ -20,7 +20,7 @@ export const clearRestaurantInfo = () => {
 };
 
 // eslint-disable-next-line consistent-return,no-unused-vars
-export const createPhoto = (restaurant) => {
+export const createPhoto = restaurant => {
   if (restaurant.photos) {
     const photo = restaurant.photos[0];
     // eslint-disable-next-line no-prototype-builtins
@@ -32,13 +32,13 @@ export const createPhoto = (restaurant) => {
   return `${logo}`;
 };
 
-export const restaurantRating = (restaurant) => {
+export const restaurantRating = restaurant => {
   const rating = [];
 
   if (restaurant.rating) {
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < 5; i++) {
-      if (restaurant.rating < (i + 1)) {
+      if (restaurant.rating < i + 1) {
         rating.push('<span class="fa fa-star-o"></span>');
       } else {
         rating.push('<span class="fa fa-star"></span>');
@@ -68,38 +68,51 @@ export const limitTitle = (title, limit = 17) => {
   return title;
 };
 
-export const createButton = (page, type) => `<button class="btn-inline results__btn--${type}" data-goto=${type === 'prev' ? page - 1 : page + 1}>
+export const createButton = (
+  page,
+  type
+) => `<button class="btn-inline results__btn--${type}" data-goto=${
+  type === 'prev' ? page - 1 : page + 1
+}>
         <span>Page ${type === 'prev' ? page - 1 : page + 1}</span>
         <svg class="search__icon">
-            <use href="${icons}#icon-triangle-${type === 'prev' ? 'left' : 'right'}"></use>
+            <use href="${icons}#icon-triangle-${
+  type === 'prev' ? 'left' : 'right'
+}"></use>
         </svg>
     </button>`;
 
-export const renderRestaurant = (restaurant) => {
+export const renderRestaurant = restaurant => {
   const markup = `
                 <li class="results__list_item">
                     <div class="results__link">
                         <div class="results__image">
-                            <img src="${createPhoto(restaurant)}" alt="${restaurant.name}">
+                            <img src="${createPhoto(
+                              restaurant
+                            )}" alt="${restaurant.name}">
                         </div>
                         <div class="results__text-data">
                             <div class="results____title-container">
                               <div class="results__header">
-                                  <h1 class="results__title">${limitTitle(restaurant.name)}</h1>
+                                  <h1 class="results__title">${limitTitle(
+                                    restaurant.name
+                                  )}</h1>
                               </div>
                                 <div class="results__rating">
-                                  <span class="results__rating-score">${restaurant.rating ? restaurant.rating : ''}</span>
-                                  <span class="results__rating-stars">${restaurantRating(restaurant)}</span>
-                                  <span class="results__num-ratings">${restaurant.user_ratings_total ? `(${restaurant.user_ratings_total})` : ''}</span>
+                                  <span class="results__rating-score">${
+                                    restaurant.rating
+                                      ? restaurant.rating
+                                      : ''
+                                  }</span>
+                                  <span class="results__rating-stars">${restaurantRating(
+                                    restaurant
+                                  )}</span>
+                                  <span class="results__num-ratings">${
+                                    restaurant.user_ratings_total
+                                      ? `(${restaurant.user_ratings_total})`
+                                      : ''
+                                  }</span>
                                 </div>
-<!--                                <div class="results__descriptions">-->
-<!--                                    <div class="results__description">-->
-<!--                                        <span></span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="results__opening-hours">-->
-<!--                                     <span></span>-->
-<!--                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -109,31 +122,37 @@ export const renderRestaurant = (restaurant) => {
   elements.searchResultList.insertAdjacentHTML('beforeend', markup);
 };
 
-export const renderNewRestaurant = (restaurant) => {
+export const renderNewRestaurant = restaurant => {
   const markup = `
                 <li class="results__list_item">
                     <div class="results__link">
                         <div class="results__image">
-                            <img src="${createPhoto(restaurant)}" alt="${restaurant.name}">
+                            <img src="${createPhoto(
+                              restaurant
+                            )}" alt="${restaurant.name}">
                         </div>
                         <div class="results__text-data">
                             <div class="results____title-container">
                               <div class="results__header">
-                                  <h1 class="results__title">${limitTitle(restaurant.name)}</h1>
+                                  <h1 class="results__title">${limitTitle(
+                                    restaurant.name
+                                  )}</h1>
                               </div>
                                 <div class="results__rating">
-                                  <span class="results__rating-score">${restaurant.rating ? restaurant.rating : ''}</span>
-                                  <span class="results__rating-stars">${restaurantRating(restaurant)}</span>
-                                  <span class="results__num-ratings">${restaurant.user_ratings_total ? `(${restaurant.user_ratings_total})` : ''}</span>
+                                  <span class="results__rating-score">${
+                                    restaurant.rating
+                                      ? restaurant.rating
+                                      : ''
+                                  }</span>
+                                  <span class="results__rating-stars">${restaurantRating(
+                                    restaurant
+                                  )}</span>
+                                  <span class="results__num-ratings">${
+                                    restaurant.user_ratings_total
+                                      ? `(${restaurant.user_ratings_total})`
+                                      : ''
+                                  }</span>
                                 </div>
-<!--                                <div class="results__descriptions">-->
-<!--                                    <div class="results__description">-->
-<!--                                        <span></span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="results__opening-hours">-->
-<!--                                     <span></span>-->
-<!--                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -175,7 +194,11 @@ export const renderResultsNotFound = () => {
   elements.searchResultList.insertAdjacentHTML('afterbegin', markup);
 };
 
-export const renderResults = (restaurants, page = 1, resPerPage = 4) => {
+export const renderResults = (
+  restaurants,
+  page = 1,
+  resPerPage = 4
+) => {
   if (restaurants.length === 0) {
     renderResultsNotFound();
 
@@ -199,7 +222,11 @@ export const renderResults = (restaurants, page = 1, resPerPage = 4) => {
   renderButtons(page, restaurants.length, resPerPage);
 };
 
-export const renderNewResults = (restaurants, page = 1, resPerPage = 4) => {
+export const renderNewResults = (
+  restaurants,
+  page = 1,
+  resPerPage = 4
+) => {
   // render results of current page
   const start = (page - 1) * resPerPage;
 
@@ -211,13 +238,14 @@ export const renderNewResults = (restaurants, page = 1, resPerPage = 4) => {
   renderButtons(page, restaurants.length, resPerPage);
 };
 
-export const renderRestaurantInfo = async (restaurant) => {
+export const renderRestaurantInfo = async restaurant => {
   clearRestaurantInfo();
 
   elements.restaurantInfoModalTitle.textContent = restaurant.name;
   elements.restaurantName.textContent = restaurant.name;
   elements.restaurantAddress.textContent = restaurant.vicinity;
-  elements.restaurantTelephone.textContent = restaurant.formatted_phone_number;
+  elements.restaurantTelephone.textContent =
+    restaurant.formatted_phone_number;
 
   renderReviews(restaurant.reviews);
   await renderStreetViewPhoto(restaurant);

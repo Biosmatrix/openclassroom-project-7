@@ -4,17 +4,23 @@ export const elements = {
   streetViewWindow: document.querySelector('#streetViewWindow'),
   streetViewPhoto: document.querySelector('#streetViewPhoto'),
   photoWindow: document.querySelector('#photoWindow'),
-  restaurantInfoModalTitle: document.querySelector('#restaurantInfoModalTitle'),
+  restaurantInfoModalTitle: document.querySelector(
+    '#restaurantInfoModalTitle'
+  ),
   restaurantName: document.querySelector('#restaurant_name'),
   restaurantAddress: document.querySelector('#restaurant_address'),
-  restaurantTelephone: document.querySelector('#restaurant_telephone'),
+  restaurantTelephone: document.querySelector(
+    '#restaurant_telephone'
+  ),
   ratings: document.querySelector('.star-rating'),
   reviewForm: document.querySelector('#reviewForm'),
   reviewRatingStar: document.querySelectorAll('#review_rating .fa'),
   filterRatingStar: document.querySelectorAll('.filter .fa'),
   reviewAuthorNameInput: document.querySelector('#author_name'),
   reviewAuthorCommentInput: document.querySelector('#author_comment'),
-  reviewRatingStarInput: document.querySelector('#review_rating input.rating-value'),
+  reviewRatingStarInput: document.querySelector(
+    '#review_rating input.rating-value'
+  ),
   starRating: document.querySelector('.star-rating .fa'),
   reviews: document.querySelector('.reviews'),
   reviewsList: document.querySelector('.reviews__list'),
@@ -23,7 +29,7 @@ export const elements = {
   searchResultItems: document.querySelectorAll('.results__list_item'),
   searchResultPages: document.querySelector('.results__pages'),
   filterButton: document.querySelectorAll('.filter fa'),
-  filterInput: document.querySelector('.custom--options'),
+  filterInput: document.querySelector('.custom--options')
 };
 
 export const elementStrings = {
@@ -34,7 +40,7 @@ export const elementStrings = {
   newRestaurantAddress: 'restaurantAddress',
   newRestaurantRating: 'restaurantRating',
   newRestaurantLat: 'restaurantLocationLat',
-  newRestaurantLng: 'restaurantLocationLng',
+  newRestaurantLng: 'restaurantLocationLng'
 };
 
 export const render = (template, selector) => {
@@ -55,4 +61,5 @@ export const createElement = (tag, className) => {
 };
 
 // Retrieve an element from the DOM
-export const getElement = selector => document.querySelector(selector);
+export const getElement = selector =>
+  document.querySelector(selector);

@@ -7,15 +7,14 @@ export default class StreetView {
   }
 
   async getPhoto() {
-
     try {
-
-      const res = await axios(`${proxy}https://maps.googleapis.com/maps/api/streetview?size=${this.query.size}&location=${this.query.location}&fov=${this.query.fov}&heading=${this.query.heading}&pitch=${this.query.pitch}&key=${key}`);
+      const res = await axios(
+        // eslint-disable-next-line max-len
+        `${proxy}https://maps.googleapis.com/maps/api/streetview?size=${this.query.size}&location=${this.query.location}&fov=${this.query.fov}&heading=${this.query.heading}&pitch=${this.query.pitch}&key=${key}`
+      );
 
       return res.headers['x-final-url'];
-
     } catch (error) {
-
       alert(error);
     }
   }

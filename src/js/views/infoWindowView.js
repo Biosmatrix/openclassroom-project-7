@@ -1,9 +1,11 @@
 import { elements } from './base';
 import { createPhoto, restaurantRating } from './restaurantView';
 
-// export const infoWindowView = new google.maps.InfoWindow();
-
-export const infoWindow = currentPosition => new window.google.maps.InfoWindow({ content: `${elements.infoWindow}`, position: currentPosition });
+export const infoWindow = currentPosition =>
+  new window.google.maps.InfoWindow({
+    content: `${elements.infoWindow}`,
+    position: currentPosition
+  });
 
 export const clearInfoWindow = () => {
   elements.infoIcon.innerHTML = '';
@@ -11,21 +13,36 @@ export const clearInfoWindow = () => {
   elements.infoRating.innerHTML = '';
 };
 
-export const isPhoneNumber = restaurant => (!restaurant.formatted_phone_number ? '' : restaurant.formatted_phone_number);
+export const isPhoneNumber = restaurant =>
+  !restaurant.formatted_phone_number
+    ? ''
+    : restaurant.formatted_phone_number;
 
-export const isRating = restaurant => (!restaurant.rating ? '' : restaurantRating(restaurant));
+export const isRating = restaurant =>
+  !restaurant.rating ? '' : restaurantRating(restaurant);
 
 export const infoWindowContent = restaurant => `
         <div class="container text-center">
             <div id="infoPhoto">
-               <img class="restaurant-photo" src="${createPhoto(restaurant)}" alt="${restaurant.name}" width="100px" height="70px"/>
+               <img class="restaurant-photo" src="${createPhoto(
+                 restaurant
+               )}" alt="${
+  restaurant.name
+}" width="100px" height="70px"/>
             </div>
-            <h3 class="star-rating" id="infoRating">${isRating(restaurant)}</h3>
+            <h3 class="star-rating" id="infoRating">${isRating(
+              restaurant
+            )}</h3>
             <div id="infoName">
                <p class="restaurant-name"> ${restaurant.name}</p>
             </div>
-            <div class="restaurant-address" id="infoAddress">${restaurant.vicinity}</div>
-            <div class="restaurant-phone" id="infoPhone">${isPhoneNumber(restaurant)}</div>
+            <div class="restaurant-address" id="infoAddress">${
+              restaurant.vicinity
+            }</div>
+            <div class="restaurant-phone" id="infoPhone">${isPhoneNumber(
+              restaurant
+            )}</div>
+           
             <a href="#" data-toggle="modal" data-target="#restaurantInfoModal">View More</a>
         </div>
     `;
@@ -47,7 +64,9 @@ export const newInfoWindowContent = marker => `<form id="restaurantForm">
                <span class="fa fa-star-o" data-rating="5"></span>
                <input type="hidden" name="rating" id="restaurantRating" class="rating-value" value="0"/>
             </div>
-          <input type="hidden" id="markerId" name="markerId" value="${marker.id}"/>
+          <input type="hidden" id="markerId" name="markerId" value="${
+            marker.id
+          }"/>
           <input type="hidden" id="restaurantLocationLat" name="restaurantLocationLat" value="${marker.position.lat()}"/>
           <input type="hidden" id="restaurantLocationLng" name="restaurantLocationLng" value="${marker.position.lng()}"/>
           <button type="submit" id="btnAddRestaurant" class="btn btn-primary btn-block">Add Restaurant</button>
