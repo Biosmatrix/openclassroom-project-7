@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "myresto app",
   "scripts": {
-    "build": "webpack --colors --config webpack/webpack.config.js --env.env=prod",
+    "build": "cross-env NODE_ENV=production webpack --colors --config webpack/webpack.config.js --env.env=prod",
     "start": "webpack-dev-server --open --config webpack/webpack.config.js --env.env=dev"
   },
   "repository": {
