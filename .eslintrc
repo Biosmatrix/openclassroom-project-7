@@ -7,14 +7,15 @@
     "es6": true
   },
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 2018,
     "sourceType": "module"
   },
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": ["error"],
-    "max-len": ["error", { "code": 80 }],
+    "max-len": 0,
     "function-paren-newline": 0,
+    "func-style":0,
     "one-var": 0,
     "one-var-declaration-per-line": 0,
     "new-cap": 0,
@@ -31,6 +32,11 @@
     "no-new": 0,
     "no-dupe-keys": 0,
     "no-multi-assign": 0,
+    "no-alert": 0,
+    "camelcase": 0,
+    "no-return-await": 0,
+    "no-console": 0,
+    "no-return-assign": 0,
     "class-methods-use-this": 0,
     "no-unused-expressions": 0
   }
