@@ -3,6 +3,8 @@ import { elements } from './base';
 import { renderReviews } from './reviewView';
 import icons from '../../img/icons.svg';
 import logo from '../../img/logo.png';
+// eslint-disable-next-line import/no-named-as-default,import/no-named-as-default-member
+import { renderStreetViewPhoto }  from './StreetView';
 
 export const clearResults = () => {
   elements.searchResultList.innerHTML = '';
@@ -16,7 +18,6 @@ export const clearRestaurantInfo = () => {
   elements.restaurantAddress.textContent = '';
   elements.restaurantTelephone.textContent = '';
 };
-
 
 // eslint-disable-next-line consistent-return,no-unused-vars
 export const createPhoto = (restaurant) => {
@@ -210,7 +211,7 @@ export const renderNewResults = (restaurants, page = 1, resPerPage = 4) => {
   renderButtons(page, restaurants.length, resPerPage);
 };
 
-export const renderRestaurantInfo = (restaurant) => {
+export const renderRestaurantInfo = async (restaurant) => {
   clearRestaurantInfo();
 
   elements.restaurantInfoModalTitle.textContent = restaurant.name;
@@ -219,41 +220,5 @@ export const renderRestaurantInfo = (restaurant) => {
   elements.restaurantTelephone.textContent = restaurant.formatted_phone_number;
 
   renderReviews(restaurant.reviews);
-
-  // street view functionality
-  const streetView = new window.google.maps.StreetViewService();
-
-  const panoramaRequest = {
-    location: restaurant.geometry.location,
-    radius: 50,
-  };
-
-  const processStreetView = (data, status) => {
-    if (status === 'OK') {
-      const panorama = new window.google.maps.StreetViewPanorama(elements.panorama);
-
-      panorama.setPano(data.location.pano);
-
-      panorama.setPov({
-        heading: 440,
-        pitch: 0,
-      });
-      panorama.setVisible(true);
-
-      elements.streetViewPhoto.innerHTML = '';
-
-      const html = `<img src="${createPhoto(restaurant)}" alt="${restaurant.name}"/>`;
-
-      elements.streetViewPhoto.insertAdjacentHTML('afterbegin', html);
-
-      elements.streetViewPhoto.display = 'none';
-      elements.streetViewWindow.display = 'block';
-    } else {
-      elements.photoWindow.display = 'none';
-      elements.streetViewWindow.display = 'none';
-      elements.streetViewPhoto.display = 'block';
-    }
-  };
-
-  streetView.getPanorama(panoramaRequest, processStreetView);
+  await renderStreetViewPhoto(restaurant);
 };
