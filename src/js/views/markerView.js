@@ -1,13 +1,15 @@
 import markerIcon from '../../img/restauant.png';
 
 // eslint-disable-next-line max-len
-export const marker = (currentPosition, map) => new window.google.maps.Marker({ position: currentPosition, map });
+export const marker = (currentPosition, map) =>
+  new window.google.maps.Marker({ position: currentPosition, map });
 
 // drop marker on the map
-export const dropMarker = (map, markers, index) => markers[index].setMap(map);
+export const dropMarker = (map, markers, index) =>
+  markers[index].setMap(map);
 
 // reset markers and results
-export const clearMarkers = (markers) => {
+export const clearMarkers = markers => {
   // eslint-disable-next-line no-shadow
   markers.forEach((marker, index) => {
     if (markers[index]) {
@@ -22,20 +24,22 @@ export const clearMarkers = (markers) => {
 export const setMarkers = (map, restaurants) => {
   const markers = [];
 
-  restaurants.forEach((restaurant) => {
+  restaurants.forEach(restaurant => {
     // creates a marker on the map
-    markers.push(new window.google.maps.Marker({
-      map,
-      position: restaurant.geometry.location,
-      geometry: restaurant.geometry,
-      placeId: restaurant.place_id,
-      id: restaurant.id,
-      icon: {
-        url: `${markerIcon}`,
-        scaledSize: new window.google.maps.Size(50, 50), // pixels
-      },
-      animation: window.google.maps.Animation.DROP,
-    }));
+    markers.push(
+      new window.google.maps.Marker({
+        map,
+        position: restaurant.geometry.location,
+        geometry: restaurant.geometry,
+        placeId: restaurant.place_id,
+        id: restaurant.id,
+        icon: {
+          url: `${markerIcon}`,
+          scaledSize: new window.google.maps.Size(50, 50) // pixels
+        },
+        animation: window.google.maps.Animation.DROP
+      })
+    );
   });
 
   return markers;
@@ -52,6 +56,6 @@ export const setMarker = (map, restaurant) =>
     isRestaurantNew: restaurant.isRestaurantNew,
     icon: {
       url: `${markerIcon}`,
-      scaledSize: new window.google.maps.Size(50, 50), // pixels
-    },
+      scaledSize: new window.google.maps.Size(50, 50) // pixels
+    }
   });
