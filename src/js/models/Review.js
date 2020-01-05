@@ -5,10 +5,11 @@ export default class Review {
     this.reviews = [];
   }
 
-  addReview(authorName, rating, text) {
+  // eslint-disable-next-line camelcase
+  addReview(author_name, rating, text) {
     const review = {
       id: uniqid(),
-      authorName,
+      author_name,
       rating,
       text,
     };
