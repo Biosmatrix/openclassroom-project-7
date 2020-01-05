@@ -5,28 +5,57 @@ module.exports = {
   mode: 'development',
   devtool: 'cheap-eval-source-map',
   output: {
-    chunkFilename: 'js/[name].chunk.js',
+    filename: 'js/[name].bundle.js',
+    chunkFilename: 'js/[name].chunk.js'
   },
   devServer: {
+    contentBase: path.resolve(__dirname, '../', 'dist'),
     inline: true,
+    historyApiFallback: true,
+    compress: true,
+    watchContentBase: true
+    // port: 8080,
+    // open: 'Google Chrome',
   },
   plugins: [
     new Dotenv({
-      path: './.env.development',
-    }),
+      path: './.env.development'
+    })
   ],
   module: {
     rules: [
       {
         test: /\.(js)$/,
         exclude: /node_modules/,
-        include: path.resolve(__dirname, '../src'),
-        loader: 'babel-loader',
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        options: {
+          emitWarning: true
+        }
       },
       {
-        test: /\.s?css$/i,
-        use: ['style-loader', 'css-loader?sourceMap=true', 'sass-loader'],
+        test: /\.(js)$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
       },
-    ],
-  },
+      {
+        // Apply rule for .sass, .scss or .css files
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          {
+            // This loader add style to link=href
+            loader: 'style-loader'
+          },
+          {
+            // This loader resolves url() and @imports inside CSS
+            loader: 'css-loader?sourceMap=true'
+          },
+          {
+            // First we transform SASS to standard CSS
+            loader: 'sass-loader'
+          }
+        ]
+      }
+    ]
+  }
 };

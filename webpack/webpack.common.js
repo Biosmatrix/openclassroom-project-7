@@ -2,53 +2,68 @@ const path = require('path');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 // eslint-disable-next-line import/no-extraneous-dependencies
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: path.resolve(__dirname, '../src/js/index.js'),
+    main: path.resolve(__dirname, '../src/js/index.js')
   },
   output: {
-    path: path.join(__dirname, '../build'),
-    filename: 'js/[name].js',
+    path: path.resolve(__dirname, '../', 'dist')
   },
   optimization: {
     splitChunks: {
       chunks: 'all',
-      name: false,
-    },
+      name: false
+    }
   },
   plugins: [
-    new CleanWebpackPlugin(['build'], { root: path.resolve(__dirname, '..') }),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '../src/index.html'),
+    new CleanWebpackPlugin(['dist'], {
+      root: path.resolve(__dirname, '..')
     }),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../src/public'),
+        to: 'public',
+        ignore: ['index.html']
+      }
+    ]),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '../src/public/index.html')
+    })
   ],
   resolve: {
+    extensions: ['*', '.js'],
     alias: {
-      '~': path.resolve(__dirname, '../src'),
-    },
+      '~': path.resolve(__dirname, '../src')
+    }
   },
   module: {
     rules: [
       {
-        test: /\.(ico|jpg|jpeg|png|gif|svg)(\?.*)?$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: 'img/[name]-[hash:8].[ext]',
-          },
-        },
+        test: /\.(png|jp(e*)g|gif|svg|ico)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[hash:8].[ext]',
+              outputPath: 'img'
+            }
+          }
+        ]
       },
       {
         test: /\.(eot|otf|webp|ttf|woff|woff2)(\?.*)?$/,
         use: {
           loader: 'file-loader',
           options: {
-            name: 'fonts/[name]-[hash:8].[ext]',
-          },
-        },
-      },
-    ],
-  },
+            name: '[name].[hash:8].[ext]',
+            outputPath: 'fonts'
+          }
+        }
+      }
+    ]
+  }
 };
