@@ -16,6 +16,7 @@ export const elements = {
   reviewForm: document.querySelector('#reviewForm'),
   reviewRatingStar: document.querySelectorAll('#review_rating .fa'),
   filterRatingStar: document.querySelectorAll('.filter .fa'),
+  reviewRestaurantInput: document.querySelector('#restaurant_id'),
   reviewAuthorNameInput: document.querySelector('#author_name'),
   reviewAuthorCommentInput: document.querySelector('#author_comment'),
   reviewRatingStarInput: document.querySelector(
