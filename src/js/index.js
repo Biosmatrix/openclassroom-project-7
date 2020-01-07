@@ -844,25 +844,25 @@ elements.filterInput.addEventListener('click', event => {
  * REVIEW CONTROLLER
  */
 const controlReview = () => {
-  // 1) Get query from view
+  // 1) Get review inputs from view
   const inputs = reviewView.getReviewInputs();
 
   if (inputs) {
-    // 2) New search object and add to state
-    state.review = new Review();
+    // 2) New review object and add to state
+    if (!state.review) state.review = new Review();
 
     // 3) Prepare UI for results
     reviewView.clearReviewInputs();
 
     try {
-      // 4) Search for recipes
+      // 4) Add each review to the state and UI
       const review = state.review.addReview(
         inputs.author,
         inputs.rating,
         inputs.comment
       );
 
-      // 5) Render results on UI
+      // 5) Render review on UI
       reviewView.renderReview(review);
     } catch (err) {
       // eslint-disable-next-line no-alert
