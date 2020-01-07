@@ -5,15 +5,19 @@ export default class Review {
     this.reviews = [];
   }
 
-  addReview(author_name, rating, text) {
+  addReview(id, author_name, rating, text) {
     const review = {
       id: uniqid(),
+      restaurant_id: id,
       author_name,
       rating,
       text
     };
 
     this.reviews.push(review);
+
+    // save data in localStorage
+    this.storeReview();
 
     return review;
   }
@@ -39,7 +43,13 @@ export default class Review {
     localStorage.setItem('reviews', JSON.stringify(this.reviews));
   }
 
-  getReviews() {
+  getReviews(id) {
+    this.readStorage();
+
+    return this.reviews.filter(review => review.restaurant_id === id);
+  }
+
+  readStorage() {
     const storage = JSON.parse(localStorage.getItem('reviews'));
 
     // Restoring reviews from the localStorage
