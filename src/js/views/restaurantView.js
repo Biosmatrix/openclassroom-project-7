@@ -1,6 +1,4 @@
 import { elements } from './base';
-// eslint-disable-next-line import/no-cycle
-import { renderReviews } from './reviewView';
 import icons from '../../img/icons.svg';
 import logo from '../../img/logo.png';
 // eslint-disable-next-line import/no-cycle
@@ -122,46 +120,6 @@ export const renderRestaurant = restaurant => {
   elements.searchResultList.insertAdjacentHTML('beforeend', markup);
 };
 
-export const renderNewRestaurant = restaurant => {
-  const markup = `
-                <li class="results__list_item">
-                    <div class="results__link">
-                        <div class="results__image">
-                            <img src="${createPhoto(
-                              restaurant
-                            )}" alt="${restaurant.name}">
-                        </div>
-                        <div class="results__text-data">
-                            <div class="results____title-container">
-                              <div class="results__header">
-                                  <h1 class="results__title">${limitTitle(
-                                    restaurant.name
-                                  )}</h1>
-                              </div>
-                                <div class="results__rating">
-                                  <span class="results__rating-score">${
-                                    restaurant.rating
-                                      ? restaurant.rating
-                                      : ''
-                                  }</span>
-                                  <span class="results__rating-stars">${restaurantRating(
-                                    restaurant
-                                  )}</span>
-                                  <span class="results__num-ratings">${
-                                    restaurant.user_ratings_total
-                                      ? `(${restaurant.user_ratings_total})`
-                                      : ''
-                                  }</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-           `;
-
-  elements.searchResultList.insertAdjacentHTML('afterbegin', markup);
-};
-
 export const renderButtons = (page, numResults, resPerPage) => {
   const pages = Math.ceil(numResults / resPerPage);
 
@@ -247,6 +205,5 @@ export const renderRestaurantInfo = async restaurant => {
   elements.restaurantTelephone.textContent =
     restaurant.formatted_phone_number;
 
-  renderReviews(restaurant.reviews);
   await renderStreetViewPhoto(restaurant);
 };
