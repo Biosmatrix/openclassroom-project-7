@@ -3,12 +3,14 @@ import { elements } from './base';
 import { restaurantRating } from './restaurantView';
 
 export const getReviewInputs = () => ({
+  restaurant: elements.reviewRestaurantInput.value,
   author: elements.reviewAuthorNameInput.value,
   comment: elements.reviewAuthorCommentInput.value,
   rating: elements.reviewRatingStarInput.value
 });
 
 export const clearReviewInputs = () => {
+  elements.reviewRestaurantInput.value = '';
   elements.reviewAuthorNameInput.value = '';
   elements.reviewAuthorCommentInput.value = '';
   elements.reviewRatingStarInput.value = '0';
