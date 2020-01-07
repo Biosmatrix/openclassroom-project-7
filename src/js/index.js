@@ -790,7 +790,6 @@ window.addEventListener('click', event => {
 const filterRestaurants = rating => {
   if (rating) {
     state.allRestaurant = [...state.results];
-    // state.allRestaurant = [...state.results, ...state.newRestaurants];
 
     state.AllMarkers = [
       ...state.markers,
@@ -799,7 +798,9 @@ const filterRestaurants = rating => {
     ];
 
     // 2) New filter object and add to state
-    state.filter = new Filter(state.allRestaurant, rating);
+    if (!state.filter) {
+      state.filter = new Filter(state.allRestaurant, rating);
+    }
 
     // 3) Prepare UI for results
     restaurantView.clearResults();
