@@ -74,6 +74,38 @@ const showRestaurants = position => {
   });
 };
 
+// Builds an InfoWindow to display details above the marker
+const showRestaurantDetails = (result, marker, status = 'OK') => {
+  if (status === 'OK') {
+    // opens infoWindowView on the map
+    state.infoWindow.open(state.map, marker);
+
+    // sets restaurants details
+    state.infoWindow.setContent(infoWindowContent(result));
+
+    // sets restaurants id
+    elements.reviewRestaurantInput.value = marker.id;
+
+    // get reviews from result
+    const { reviews } = result;
+
+    // New review object and add to state
+    if (!state.review) state.review = new Review();
+
+    // get restaurant review from state
+    const restaurantReview = state.review.getReviews(marker.id);
+
+    // Render restaurant details on UI
+    restaurantView.renderRestaurantInfo(result);
+
+    // Render reviews on UI
+    reviewView.renderReviews([...reviews, ...restaurantReview]);
+  } else {
+    // eslint-disable-next-line no-console
+    console.log(`showRestaurantDetails failed: ${status}`);
+  }
+};
+
 const handleError = error => {
   // Browser supports geolocation, but user has denied permission
   if (error.code === 0) {
@@ -541,14 +573,9 @@ const mapEventListeners = () => {
         marker.id
       );
 
-      // set marker infoWindow
-      state.infoWindow.open(state.map, marker);
-
       // sets restaurants details
-      state.infoWindow.setContent(infoWindowContent(result[0]));
-
-      // eslint-disable-next-line no-undef
-      restaurantView.renderRestaurantInfo(result[0]);
+      // eslint-disable-next-line no-use-before-define
+      showRestaurantDetails(result[0], marker);
     });
 
     // Close the infoWindowView when the user clicks on the map
@@ -671,14 +698,9 @@ const mapEventListeners = () => {
             // get marker details
             const result = state.restaurants.getRestaurant(marker.id);
 
-            // set marker infoWindow
-            state.infoWindow.open(state.map, marker);
-
             // sets restaurants details
-            state.infoWindow.setContent(infoWindowContent(result[0]));
-
-            // eslint-disable-next-line no-undef
-            restaurantView.renderRestaurantInfo(result[0]);
+            // eslint-disable-next-line no-use-before-define
+            showRestaurantDetails(result[0], marker);
           }
         });
 
@@ -700,22 +722,6 @@ const mapEventListeners = () => {
   /* Once all the markers have been placed, adjust the bounds of the map to
    * show all the markers within the visible area. */
   state.map.fitBounds(state.bounds);
-};
-
-// Builds an InfoWindow to display details above the marker
-const showRestaurantDetails = (result, marker, status) => {
-  if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-    // opens infoWindowView on the map
-    state.infoWindow.open(state.map, marker);
-
-    // sets restaurants details
-    state.infoWindow.setContent(infoWindowContent(result));
-
-    restaurantView.renderRestaurantInfo(result);
-  } else {
-    // eslint-disable-next-line no-console
-    console.log(`showRestaurantDetails failed: ${status}`);
-  }
 };
 
 // pagination Controller
@@ -798,9 +804,7 @@ const filterRestaurants = rating => {
     ];
 
     // 2) New filter object and add to state
-    if (!state.filter) {
-      state.filter = new Filter(state.allRestaurant, rating);
-    }
+    state.filter = new Filter(state.allRestaurant, rating);
 
     // 3) Prepare UI for results
     restaurantView.clearResults();
@@ -822,6 +826,8 @@ const filterRestaurants = rating => {
       );
 
       restaurantView.renderResults(state.filteredRestaurants);
+
+      mapEventListeners();
     } catch (err) {
       // eslint-disable-next-line no-alert
       alert('Something wrong with filtering restaurants...');
@@ -858,6 +864,7 @@ const controlReview = () => {
     try {
       // 4) Add each review to the state and UI
       const review = state.review.addReview(
+        inputs.restaurant,
         inputs.author,
         inputs.rating,
         inputs.comment
